@@ -359,7 +359,7 @@ button{
   
 }
 input, select{
-  font-size:26px;
+  font-size:24px;
   width: 400px;
   font-family: 'Alegreya Sans', sans-serif;
   color: rgb(2, 59, 109);

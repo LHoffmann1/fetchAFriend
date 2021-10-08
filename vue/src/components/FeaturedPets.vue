@@ -2,7 +2,7 @@
 <div id = "main">
     <h1>Featured Pups</h1>
     <div id ="tile">
-  <div id="photo"><img id = "featured-pet" src="../../images/FeaturedPups/Pup5.png"></div></div>
+  <div id="photo"><img id = "featured-pet" src="../../images/FeaturedPups/Pup4.png"></div></div>
   </div>
 </template>
 
