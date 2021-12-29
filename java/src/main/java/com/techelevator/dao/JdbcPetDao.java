@@ -23,6 +23,7 @@ public class JdbcPetDao implements PetDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    //creating pet record and associative table connection on userpets
     @Override
     public void createPet(Pet pet, Principal principal) {
         String sql= "INSERT INTO pets (name, breed, birth_year, gender, temperament, size, spayed_neutered, image) VALUES (?,?,?,?,?,?,?,?)";
@@ -44,6 +45,7 @@ public class JdbcPetDao implements PetDao {
         return petList;
     }
 
+    //retrieve all pets for the current user
     @Override
     public List<Pet> getPetsByUserId(long userId) {
         List<Pet> petsByUserId = new ArrayList<>();

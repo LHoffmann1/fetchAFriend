@@ -114,8 +114,8 @@ public class PetController {
     }
 
     @GetMapping("/playDatesPending/{userId}")
-    public List<PlayDate> getPlayDatesPendingHostApproval(@PathVariable long userId) {
-        return playDateDao.getPlayDatesPendingHostApproval(userId);
+    public List<Request> getPlayDatesPendingHostApproval(@PathVariable long userId) {
+        return requestDao.getPlayDatesPendingHostApproval(userId);
     }
 
     @PutMapping("/pupdate")

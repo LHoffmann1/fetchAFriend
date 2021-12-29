@@ -8,12 +8,13 @@
       v-bind:value="request"
        >
       <form id="info" v-on:submit.prevent="approvePlayDate(request.mateId, request.playDateId)">
+        <b><div id="heading"> Possible Playdate for {{request.hostName}}:</div></b><br>
         <b>Date: </b><div class="data"> {{changeDateFormat(request.playdate.meetingDate)}}</div> <br>
         <b>Start Time:</b><div class="data"> {{changeTimeFormat(request.playdate.startTime)}} </div> <br>
         <b>Play Time: </b><div class="data">{{request.playdate.duration}} minutes</div>  <br>
         <b>Location: </b><div class="data">{{request.playdate.locationStreetAddress}}</div> 
-        <br>
-        <h3>Potential Playmate:</h3>
+        <br><br>
+        <div id="playmate">Potential Playmate:</div>
         <b>Name: </b> <div class="data">{{request.mateName}} </div> <br>
         <b>Breed: </b><div class="data">{{request.mateBreed}}</div>  <br>
         <b>Size:</b> <div class="data">{{request.mateSize}} </div> <br>
@@ -94,6 +95,7 @@ export default {
   font-size: 30px;
   padding-left:20px;
   padding-bottom: 20px;
+  padding-right: 20px;
   background-color:  rgb(25, 149, 180);
   margin: 5px;
   width: 320px;
@@ -103,8 +105,12 @@ export default {
   display:flex;
   flex-wrap: wrap;
 }
-h3{
-  font-size: 34px;
+#playmate{
+  font-size: 32px;
+  padding-bottom:10px;
+}
+#heading{
+  font-size:34px;
 }
 #main{
   display: flex;
@@ -116,12 +122,12 @@ h3{
   padding-top: 30px;
 }
 button {
-  height: 30px;
+  height: 40px;
   font-size: 18px;
   background-color: white;
   color: rgb(2, 59, 109);
   font-weight: bold;
-  border: 5px white solid;
+  border: 3px solid rgb(2, 59, 109);
   margin-top:20px;
   font-family: 'Alegreya Sans', sans-serif;
 }

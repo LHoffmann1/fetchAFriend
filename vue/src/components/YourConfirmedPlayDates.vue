@@ -1,11 +1,12 @@
 <template>
   <div id="main">
-      <h1>Upcoming Playdates: </h1>
+      <h1>Confirmed Playdates: </h1>
       <div id = "tile">
       <div id="upcoming-tile" v-for="playDate in playDates"
       v-bind:key="playDate.index"
       v-bind:playDate="playDate"
       v-bind:value="playDate">
+        <b><div id="heading">{{playDate.userPetName}} & {{playDate.mateName}}</div></b><br>
         <b>Date: </b><div class="data"> {{changeDateFormat(playDate.meetingDate)}} </div><br>
         <b>Start Time: </b> <div class="data">{{changeTimeFormat(playDate.startTime)}} </div><br>
         <b>Play Time:</b> <div class="data"> {{playDate.duration}} minutes </div><br>
@@ -121,6 +122,9 @@ export default {
 h1{
   font-size:42px;
 }
+#heading{
+  font-size:34px;
+}
 .data{
     margin-left: 10px;
     display:inline;
@@ -135,7 +139,6 @@ button {
   background-color: white;
   color: rgb(2, 59, 109);
   font-weight: bold;
-  border: 5px white solid;
   border: 3px solid rgb(2, 59, 109);
   font-family: 'Alegreya Sans', sans-serif;
 }

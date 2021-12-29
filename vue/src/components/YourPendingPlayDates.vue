@@ -1,16 +1,17 @@
 <template>
   <div id="main">
-      <h1>Playdates Awaiting Host Approval: </h1>
+      <h1>Pending Host Approval: </h1>
       <div id="tile">
-      <div id="pending-tile" v-for="playDate in playDates" 
-      v-bind:key="playDate.index"
-      v-bind:playDate="playDate"
-      v-bind:value="playDate"
+      <div id="pending-tile" v-for="request in requests" 
+      v-bind:key="request.index"
+      v-bind:request="request"
+      v-bind:value="request"
       >
-        <b>Date: </b><div class="data"> {{changeDateFormat(playDate.meetingDate)}}</div> <br>
-        <b>Start Time: </b> <div class="data">{{changeTimeFormat(playDate.startTime)}}</div> <br>
-       <b> Play Time:</b> <div class="data">{{playDate.duration}} minutes</div> <br>
-       <b> Location:</b><div class="data"> {{playDate.locationStreetAddress}}</div>
+        <b><div> {{request.mateName}} is waiting to hear back from {{request.hostName}}</div></b><br>
+        <b>Date: </b><div class="data"> {{changeDateFormat(request.playdate.meetingDate)}}</div> <br>
+        <b>Start Time: </b> <div class="data">{{changeTimeFormat(request.playdate.startTime)}}</div> <br>
+       <b> Play Time:</b> <div class="data">{{request.playdate.duration}} minutes</div> <br>
+       <b> Location:</b><div class="data"> {{request.playdate.locationStreetAddress}}</div>
         <br>
       </div></div>
   </div>
@@ -22,14 +23,14 @@ export default {
     data() {
         return {
             id: -1,
-            playDates: []
+            requests: []
         }
     },
     created() {
         this.id = this.$store.state.user.id;
 
         playDateService.getPendingPlayDates(this.id).then((response)=>{
-            this.playDates = response.data;
+            this.requests = response.data;
         })
         .catch((err) => {
         console.error(err + " nothing returned");

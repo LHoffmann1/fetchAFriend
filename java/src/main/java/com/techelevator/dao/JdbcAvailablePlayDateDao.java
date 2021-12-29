@@ -20,6 +20,7 @@ public class JdbcAvailablePlayDateDao implements AvailablePlayDateDao{
     }
 
 
+    //retrieve all playdates either available or pending status where host is not current user
     @Override
     public List<AvailablePlayDate> getAvailablePlayDates(long userId) {
         List<AvailablePlayDate> availablePlayDateList = new ArrayList<>();
@@ -37,6 +38,7 @@ public class JdbcAvailablePlayDateDao implements AvailablePlayDateDao{
         return availablePlayDateList;
     }
 
+    //get more detail for specific playdate
     @Override
     public AvailablePlayDate getAvailablePlayDateByPlayDateId(long playDateId) {
         AvailablePlayDate availablePlayDate = new AvailablePlayDate();
@@ -83,6 +85,7 @@ public class JdbcAvailablePlayDateDao implements AvailablePlayDateDao{
         availablePlayDate.setTemperament(results.getString("temperament"));
         availablePlayDate.setSize(results.getString("size"));
         availablePlayDate.setSpayedNeutered(results.getString("spayed_neutered"));
+
 
         return availablePlayDate;
     }

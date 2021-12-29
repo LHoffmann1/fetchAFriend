@@ -23,6 +23,7 @@ public class AvailablePlayDate {
     private String size;
     private String spayedNeutered;
 
+
     public AvailablePlayDate() {
     }
 
@@ -46,6 +47,7 @@ public class AvailablePlayDate {
         this.temperament = temperament;
         this.size = size;
         this.spayedNeutered = spayedNeutered;
+
     }
 
     public long getPlayDateId() {
@@ -175,6 +177,7 @@ public class AvailablePlayDate {
     public void setSpayedNeutered(String spayedNeutered) {
         this.spayedNeutered = spayedNeutered;
     }
+
 
     @Override
     public String toString() {

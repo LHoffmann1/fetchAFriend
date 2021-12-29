@@ -10,11 +10,11 @@ DELETE FROM users;
 
 
 INSERT INTO pets (name, breed, birth_year, gender, temperament, size, spayed_neutered, image) 
-VALUES ('Gerry','Labradoodle','2010','Male','energetic','large','yes','https://images.dog.ceo/breeds/labradoodle/labradoodle-forrest.png'),
-('Dobby','Doberman Pinscher','2011','Female','protective','large','yes','https://images.dog.ceo/breeds/doberman/n02107142_5181.jpg'),
-('Victoria','Old English Sheepdog','2012','Male','timid','extra large','yes','https://images.dog.ceo/breeds/sheepdog-english/n02105641_534.jpg'),
-('Melanie','Havanese','2014','Female','curious','small','no','https://images.dog.ceo/breeds/havanese/00100trPORTRAIT_00100_BURST20191222103956878_COVER.jpg'),
-('George','Akita','2015','Male','friendly','medium','no','https://images.dog.ceo/breeds/akita/An_Akita_Inu_resting.jpg');
+VALUES ('Webster','Labradoodle','2010','Male','energetic','large','yes','https://images.dog.ceo/breeds/labradoodle/labradoodle-forrest.png'),
+('Dobby','Doberman Pinscher','2011','Female','curious','large','yes','https://images.dog.ceo/breeds/doberman/n02107142_5181.jpg'),
+('Teddy','Old English Sheepdog','2012','Male','timid','large','yes','https://images.dog.ceo/breeds/sheepdog-english/n02105641_534.jpg'),
+('Doogal','Havanese','2014','Male','curious','small','no','https://images.dog.ceo/breeds/havanese/00100trPORTRAIT_00100_BURST20191222103956878_COVER.jpg'),
+('Higgins','Mixed Breed','2015','Male','friendly','medium','no','https://images.dog.ceo/breeds/akita/An_Akita_Inu_resting.jpg');
 
 --create relationships of users with pets
 INSERT INTO user_pet(user_id, pet_id)

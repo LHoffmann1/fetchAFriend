@@ -21,13 +21,15 @@ public class PlayDate {
     private String mateSize;
     private long statusId;
     private String userPetName;
+    private String mateName; //new
+
 
 
     public PlayDate(){
 
     }
-
-    public PlayDate(long playDateId, long hostPetId, long matePetId, String locationStreetAddress, String locationCity, long locationZipcode, LocalDate meetingDate, LocalTime startTime, long duration, String[] mateDescription, String mateSize, long statusId, String userPetName) {
+    //added mateName
+    public PlayDate(long playDateId, long hostPetId, long matePetId, String locationStreetAddress, String locationCity, long locationZipcode, LocalDate meetingDate, LocalTime startTime, long duration, String[] mateDescription, String mateSize, long statusId, String userPetName, String mateName) {
         this.playDateId = playDateId;
         this.hostPetId = hostPetId;
         this.matePetId = matePetId;
@@ -41,6 +43,7 @@ public class PlayDate {
         this.mateSize = mateSize;
         this.statusId = statusId;
         this.userPetName = userPetName;
+        this.mateName= mateName;
     }
 
     public String getUserPetName() {
@@ -49,6 +52,15 @@ public class PlayDate {
 
     public void setUserPetName(String userPetName) {
         this.userPetName = userPetName;
+    }
+
+    //new getter & setter
+    public String getMateName() {
+        return mateName;
+    }
+
+    public void setMateName(String mateName) {
+        this.mateName = mateName;
     }
 
     public long getPlayDateId() {

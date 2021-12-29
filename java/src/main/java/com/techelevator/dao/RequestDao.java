@@ -10,6 +10,7 @@ public interface RequestDao {
     List<Request> getAllRequestsByUserId(long userId);
     List<Request> getAllRequestsByMateId(long matePetId);
     void updateRequest(long playDateId, long matePateId);
+    List<Request> getPlayDatesPendingHostApproval(long userId);
 
 
 

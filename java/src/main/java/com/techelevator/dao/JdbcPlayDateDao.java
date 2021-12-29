@@ -23,6 +23,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
     public JdbcPlayDateDao(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
     @Override
     public List<PlayDate> getAllPlayDates() {
         List<PlayDate> playDateList = new ArrayList<>();
@@ -64,6 +65,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
         return LocalDate.now();
     }
 
+
     @Override
     public void updatePlayDate(long playDateId, long matePetId) {
         String sql = "UPDATE play_dates SET status_id = 3, mate_pet_id = ? WHERE play_date_id = ?";
@@ -71,6 +73,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
 
     }
 
+    //retrieve all upcoming confirmed playdates where userId associated with either host or mate dog
     @Override
     public List<PlayDate> getConfirmedPlayDates(long userId) {
         List<PlayDate> playDateList = new ArrayList<>();
@@ -81,8 +84,8 @@ public class JdbcPlayDateDao implements PlayDateDao{
                 "OR mate_pet_id IN (SELECT pet_id FROM user_pet WHERE user_id = ?) " +
                 "AND status_id = 3 AND meeting_date >= CURRENT_DATE " +
                 "ORDER BY meeting_date ASC";
-
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
+
         while (results.next()) {
             playDateList.add(mapToRowSet(results));
         }
@@ -90,7 +93,8 @@ public class JdbcPlayDateDao implements PlayDateDao{
 
     }
 
-    @Override
+    //retrieve all playdates where user's pet has applied
+    /*@Override
     public List<PlayDate> getPlayDatesPendingHostApproval(long userId) {
         List<PlayDate> pendingPlayDatesList = new ArrayList<>();
         String sql= "SELECT play_dates.play_date_id, host_pet_id, mate_pet_id, location_street_address, location_city, location_zipcode, meeting_date, " +
@@ -105,11 +109,11 @@ public class JdbcPlayDateDao implements PlayDateDao{
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
         while(results.next()) {
-            pendingPlayDatesList.add(mapToRowSet(results));
+            pendingPlayDatesList.add(mapToRowSet2(results));
         }
 
         return pendingPlayDatesList;
-    }
+    }*/
 
     @Override
     public void cancelPlayDate(long playDateId) {
@@ -133,9 +137,50 @@ public class JdbcPlayDateDao implements PlayDateDao{
         playDate.setMateSize(results.getString("mate_size"));
         playDate.setStatusId(results.getLong("status_id"));
 
+        //new chunk start
+        String sql = "SELECT name FROM pets WHERE pet_id = ?";
+        SqlRowSet result1 = jdbcTemplate.queryForRowSet(sql, playDate.getHostPetId());
+        if(result1.next()){
+            playDate.setUserPetName(result1.getString("name"));
+        }
+        String sql2 = "SELECT name FROM pets WHERE pet_id = ?";
+        SqlRowSet result2 = jdbcTemplate.queryForRowSet(sql2, playDate.getMatePetId());
+        if(result2.next()){
+            playDate.setMateName(result2.getString("name"));
+        }
+        //new chunk end
         return playDate;
     }
 
+    private PlayDate mapToRowSet2(SqlRowSet results) {
+        PlayDate playDate = new PlayDate();
+        playDate.setPlayDateId(results.getLong("play_date_id"));
+        playDate.setHostPetId(results.getLong("host_pet_id"));
+        playDate.setMatePetId(results.getLong("mate_pet_id"));
+        playDate.setLocationStreetAddress(results.getString("location_street_address"));
+        playDate.setLocationCity(results.getString("location_city"));
+        playDate.setLocationZipcode(results.getLong("location_zipcode"));
+        playDate.setMeetingDate(results.getDate("meeting_date").toLocalDate());
+        playDate.setStartTime(results.getTime("start_time").toLocalTime());
+        playDate.setDuration(results.getLong("duration"));
+        playDate.setMateDescription(results.getString("mate_description").split(","));
+        playDate.setMateSize(results.getString("mate_size"));
+        playDate.setStatusId(results.getLong("status_id"));
+
+        //new chunk start
+        String sql = "SELECT name FROM pets WHERE pet_id = ?";
+        SqlRowSet result1 = jdbcTemplate.queryForRowSet(sql, playDate.getHostPetId());
+        if(result1.next()){
+            playDate.setUserPetName(result1.getString("name"));
+        }
+        String sql2 = "SELECT name FROM pets JOIN request ON request.mate_id = pets.pet_id WHERE mate_id = ? AND play_date_id=?";
+        SqlRowSet result2 = jdbcTemplate.queryForRowSet(sql2, playDate.getMatePetId(), playDate.getPlayDateId());
+        if(result2.next()){
+            playDate.setMateName(result2.getString("name"));
+        }
+        //new chunk end
+        return playDate;
+    }
     private PlayDate mapToConfirmed(SqlRowSet results) {
         PlayDate playDate = new PlayDate();
         playDate.setPlayDateId(results.getLong("play_date_id"));

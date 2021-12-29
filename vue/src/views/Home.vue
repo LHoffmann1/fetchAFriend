@@ -58,6 +58,7 @@ export default {
   #requests{
     grid-area: requests;
     
+    
   }
   #featured{
     grid-area: featured;
@@ -65,9 +66,11 @@ export default {
   
   #confirmed{
     grid-area: confirmed;
+    
   }
   #waiting{
     grid-area: waiting;
+    
   }
   #pets{
     grid-area: pets;

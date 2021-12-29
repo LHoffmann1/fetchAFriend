@@ -7,6 +7,7 @@ public class Request {
     private long statusId;
     private long mateId;
 
+    private String hostName; //new
     private long hostPetId;
     private long petId;
     private String mateName;
@@ -22,11 +23,13 @@ public class Request {
 
     }
 
-    public Request(long requestId, long playDateId, long statusId, long mateId, long hostPetId, long petId, String mateName, String mateBreed, int mateBirthYear, String mateGender, String mateTemperament, String mateSize, String mateSpayedNeutered) {
+    //add hostName to constructor and getters & setters
+    public Request(long requestId, long playDateId, long statusId, long mateId, String hostName, long hostPetId, long petId, String mateName, String mateBreed, int mateBirthYear, String mateGender, String mateTemperament, String mateSize, String mateSpayedNeutered) {
         this.requestId = requestId;
         this.playDateId = playDateId;
         this.statusId = statusId;
         this.mateId = mateId;
+        this.hostName = hostName;
         this.hostPetId = hostPetId;
         this.petId = petId;
         this.mateName = mateName;
@@ -76,6 +79,14 @@ public class Request {
 
     public void setMateId(long mateId) {
         this.mateId = mateId;
+    }
+
+    public String getHostName() {
+        return hostName;
+    }
+
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
     }
 
     public long getHostPetId() {

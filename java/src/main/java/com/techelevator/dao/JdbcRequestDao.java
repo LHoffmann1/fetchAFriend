@@ -44,7 +44,7 @@ public class JdbcRequestDao implements RequestDao {
         return requestsByUserId;
     }
 
-    // for
+    // for nothing
     @Override
     public List<Request> getAllRequestsByMateId(long userId) {
         List<Request> requestsByUserId = new ArrayList<>();
@@ -64,6 +64,37 @@ public class JdbcRequestDao implements RequestDao {
 
     }
 
+    @Override
+    public List<Request> getPlayDatesPendingHostApproval(long userId) {
+        List<Request> pendingPlayDatesList = new ArrayList<>();
+        String sql= "SELECT play_dates.play_date_id, request.mate_id, play_dates.meeting_date, play_dates.start_time, play_dates.duration, play_dates.location_street_address, " +
+                "play_dates.host_pet_id, pets.pet_id, pets.name, pets.breed, pets.birth_year, pets.gender, pets.temperament, pets.size, pets.spayed_neutered FROM request " +
+                "JOIN play_dates ON request.play_date_id= play_dates.play_date_id JOIN pets ON request.mate_id= pets.pet_id " +
+                "JOIN user_pet ON pets.pet_id=user_pet.pet_id WHERE user_id = ? AND request.status_id = 2 " +
+                "AND play_dates.meeting_date >= CURRENT_DATE GROUP BY play_dates.play_date_id, pets.pet_id, request.mate_id " +
+                "ORDER BY meeting_date ASC";
+
+
+
+                /*"SELECT play_dates.play_date_id, host_pet_id, mate_pet_id, location_street_address, location_city, location_zipcode, meeting_date, " +
+                "start_time, duration, mate_description, mate_size, play_dates.status_id FROM play_dates " +
+                "JOIN request ON play_dates.play_date_id= request.play_date_id " +
+                "JOIN pets ON request.mate_id= pets.pet_id " +
+                "JOIN user_pet ON pets.pet_id= user_pet.pet_id WHERE user_id = ? " +
+                "AND request.status_id = 2 AND meeting_date >= CURRENT_DATE " +
+                "ORDER BY meeting_date ASC";*/
+
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while(results.next()) {
+            pendingPlayDatesList.add(mapToRowSet2(results, mapRowToPlayDate(results)));
+        }
+
+        return pendingPlayDatesList;
+    }
+
+    //update to confirm approved request and decline all other requests for same playdate
     @Override
     public void updateRequest(long playDateId, long mateId) {
         String sql = "UPDATE request SET status_id = 3, mate_id = ? " +
@@ -90,10 +121,12 @@ public class JdbcRequestDao implements RequestDao {
         request.setMateSize(results.getString("size"));
         request.setMateSpayedNeutered(results.getString("spayed_neutered"));
 
-//        date.setMeetingDate(results.getDate("meeting_date"));
-//        date.setStartTime(results.getTime("start_time").toLocalTime());
-//        date.setDuration(results.getLong("duration"));
-//        date.setLocationStreetAddress(results.getString("location_street_address"));
+        String sql = "SELECT name FROM pets WHERE pet_id = ?";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, request.getHostPetId());
+        if(result.next()){
+            request.setHostName(result.getString("name"));
+        }
+
         request.setPlaydate(date);
         return request;
     }
@@ -105,5 +138,28 @@ public class JdbcRequestDao implements RequestDao {
         date.setDuration(results.getLong("duration"));
         date.setLocationStreetAddress(results.getString("location_street_address"));
         return date;
+    }
+
+    private Request mapToRowSet2(SqlRowSet results, PlayDate date) {
+        Request request = new Request();
+        request.setPlayDateId(results.getLong("play_date_id"));
+        request.setHostPetId(results.getLong("host_pet_id"));
+        request.setMateId(results.getLong("mate_id"));
+        request.setMateSize(results.getString("size"));
+
+        //new chunk start
+        String sql = "SELECT name FROM pets WHERE pet_id = ?";
+        SqlRowSet result1 = jdbcTemplate.queryForRowSet(sql, request.getHostPetId());
+        if(result1.next()){
+            request.setHostName(result1.getString("name"));
+        }
+        String sql2 = "SELECT name FROM pets WHERE pet_id=?";
+        SqlRowSet result2 = jdbcTemplate.queryForRowSet(sql2, request.getMateId());
+        if(result2.next()){
+            request.setMateName(result2.getString("name"));
+        }
+        //new chunk end
+        request.setPlaydate(date);
+        return request;
     }
 }

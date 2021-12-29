@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-      <h1 id="title">Your Pet DeTAILS: </h1>
+      <h1 id="title">Your Pet Details: </h1>
       <div id="tile">
       <div id="pet-tile" v-for="pet in pets" 
       v-bind:key="pet.index"
