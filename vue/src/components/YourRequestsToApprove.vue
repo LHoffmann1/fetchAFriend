@@ -15,6 +15,7 @@
         <b>Location: </b><div class="data">{{request.playdate.locationStreetAddress}}</div> 
         <br><br>
         <div id="playmate">Potential Playmate:</div>
+         <div id="image"> <img id= "image-link" v-bind:src="request.mateImage"/> </div>
         <b>Name: </b> <div class="data">{{request.mateName}} </div> <br>
         <b>Breed: </b><div class="data">{{request.mateBreed}}</div>  <br>
         <b>Size:</b> <div class="data">{{request.mateSize}} </div> <br>
@@ -139,4 +140,9 @@ h1{
   display:inline;
   margin-left: 10px;
 }
+img{
+  width:150px;
+  border: white 3px solid;
+}
+
 </style>

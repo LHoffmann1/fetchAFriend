@@ -17,6 +17,7 @@ public class Request {
     private String mateTemperament;
     private String mateSize;
     private String mateSpayedNeutered;
+    private String mateImage;
     private PlayDate playdate;
 
     public Request(){
@@ -24,7 +25,7 @@ public class Request {
     }
 
     //add hostName to constructor and getters & setters
-    public Request(long requestId, long playDateId, long statusId, long mateId, String hostName, long hostPetId, long petId, String mateName, String mateBreed, int mateBirthYear, String mateGender, String mateTemperament, String mateSize, String mateSpayedNeutered) {
+    public Request(long requestId, long playDateId, long statusId, long mateId, String hostName, long hostPetId, long petId, String mateName, String mateBreed, int mateBirthYear, String mateGender, String mateTemperament, String mateSize, String mateSpayedNeutered, String mateImage) {
         this.requestId = requestId;
         this.playDateId = playDateId;
         this.statusId = statusId;
@@ -39,6 +40,7 @@ public class Request {
         this.mateTemperament = mateTemperament;
         this.mateSize = mateSize;
         this.mateSpayedNeutered = mateSpayedNeutered;
+        this.mateImage = mateImage;
     }
 
     public PlayDate getPlaydate() {
@@ -159,6 +161,14 @@ public class Request {
 
     public void setMateSpayedNeutered(String mateSpayedNeutered) {
         this.mateSpayedNeutered = mateSpayedNeutered;
+    }
+
+    public String getMateImage() {
+        return mateImage;
+    }
+
+    public void setMateImage(String mateImage) {
+        this.mateImage = mateImage;
     }
 
     @Override

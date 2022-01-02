@@ -159,27 +159,7 @@ export default {
   //   const breeds = this.$store.state.breeds
   // },
   methods: {
-    // onFileSelected(event) {
-    //     this.selectedFile= event.target.files[0]
-    // },
-    // onUpload() {
-    //     const fd= new FormData();
-    //     fd.append('image', this.selectedFile, this.selectedFile.name)
-    //     axios.post('', fd
-    //     .then((respsone) => {
-    //     //     if(response.status === 201) {
-    //     //         this.$router.push("/") //need to update once landing page is created
-    //     //     }
-    //     // }).catch((error) => {
-    //     //     if(error.response) {
-    //     //         window.alert('Bad Request');
-    //     //     }
-    //     //     else if (error.request) {
-    //     //         window.alert('Could not reach service');
-    //     //     }
-    //     // })
-    //     // }
-  //
+    
     saveDog() {
       let pupImage = this.$store.state.photos[Math.floor(Math.random() * 18)]
   

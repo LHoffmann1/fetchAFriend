@@ -8,10 +8,11 @@
       v-bind:value="request"
       >
         <b><div> {{request.mateName}} is waiting to hear back from {{request.hostName}}</div></b><br>
+        <div id="image"> <img id= "image-link" v-bind:src="request.mateImage"/> </div>
         <b>Date: </b><div class="data"> {{changeDateFormat(request.playdate.meetingDate)}}</div> <br>
         <b>Start Time: </b> <div class="data">{{changeTimeFormat(request.playdate.startTime)}}</div> <br>
        <b> Play Time:</b> <div class="data">{{request.playdate.duration}} minutes</div> <br>
-       <b> Location:</b><div class="data"> {{request.playdate.locationStreetAddress}}</div>
+       <b> Location:</b><div class="data"> {{request.playdate.locationStreetAddress}}</div> 
         <br>
       </div></div>
   </div>
@@ -87,6 +88,10 @@ h1{
   font-size: 26px;
   display:inline;
   margin-left: 10px;
+}
+img{
+  width:150px;
+  border: white 3px solid; 
 }
 
 </style>

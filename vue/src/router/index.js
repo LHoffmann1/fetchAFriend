@@ -99,7 +99,11 @@ const router = new Router({
         requiresAuth: true
       }
     }
-  ]
+  ],
+
+  scrollBehavior() {
+    return {x: 0, y:500}
+  }
 })
 
 router.beforeEach((to, from, next) => {

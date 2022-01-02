@@ -150,7 +150,7 @@ export default new Vuex.Store({
 'https://images.dog.ceo/breeds/papillon/n02086910_4999.jpg',
 'https://images.dog.ceo/breeds/pinscher-miniature/n02107312_2478.jpg'
 
-]
+],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {

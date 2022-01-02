@@ -7,6 +7,8 @@
       v-bind:playDate="playDate"
       v-bind:value="playDate">
         <b><div id="heading">{{playDate.userPetName}} & {{playDate.mateName}}</div></b><br>
+         <div id="image"> <img id= "image-link" v-bind:src="playDate.hostImage"/> 
+         <img id= "image-link" v-bind:src="playDate.mateImage"/> </div>
         <b>Date: </b><div class="data"> {{changeDateFormat(playDate.meetingDate)}} </div><br>
         <b>Start Time: </b> <div class="data">{{changeTimeFormat(playDate.startTime)}} </div><br>
         <b>Play Time:</b> <div class="data"> {{playDate.duration}} minutes </div><br>
@@ -141,5 +143,15 @@ button {
   font-weight: bold;
   border: 3px solid rgb(2, 59, 109);
   font-family: 'Alegreya Sans', sans-serif;
+}
+img{
+  
+  width: 150px;
+  height:130px;
+  
+  border: 3px white solid;
+}
+#image :nth-child(2){
+  margin-left:10px;
 }
 </style>

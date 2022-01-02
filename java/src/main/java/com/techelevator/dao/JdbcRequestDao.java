@@ -30,7 +30,7 @@ public class JdbcRequestDao implements RequestDao {
     public List<Request> getAllRequestsByUserId(long userId) {
         List<Request> requestsByUserId = new ArrayList<>();
         String sql= "SELECT play_dates.play_date_id, request.mate_id, play_dates.meeting_date, play_dates.start_time, play_dates.duration, play_dates.location_street_address, " +
-                "play_dates.host_pet_id, pets.pet_id, pets.name, pets.breed, pets.birth_year, pets.gender, pets.temperament, pets.size, pets.spayed_neutered FROM request " +
+                "play_dates.host_pet_id, pets.pet_id, pets.name, pets.breed, pets.birth_year, pets.gender, pets.temperament, pets.size, pets.spayed_neutered, pets.image FROM request " +
                 "JOIN play_dates ON request.play_date_id= play_dates.play_date_id JOIN pets ON request.mate_id= pets.pet_id " +
                 "JOIN user_pet ON play_dates.host_pet_id=user_pet.pet_id WHERE user_id = ? AND request.status_id = 2 " +
                 "GROUP BY play_dates.play_date_id, pets.pet_id, request.mate_id " +
@@ -44,26 +44,9 @@ public class JdbcRequestDao implements RequestDao {
         return requestsByUserId;
     }
 
-    // for nothing
-    @Override
-    public List<Request> getAllRequestsByMateId(long userId) {
-        List<Request> requestsByUserId = new ArrayList<>();
-        String sql= "SELECT play_dates.play_date_id, request.mate_id, play_dates.meeting_date, play_dates.start_time, play_dates.duration, play_dates.location_street_address, " +
-                "play_dates.host_pet_id, pets.pet_id, pets.name, pets.breed, pets.birth_year, pets.gender, pets.temperament, pets.size, pets.spayed_neutered FROM request " +
-                "JOIN play_dates ON request.play_date_id= play_dates.play_date_id JOIN pets ON request.mate_id= pets.pet_id " +
-                "JOIN user_pet ON pets.pet_id=user_pet.pet_id WHERE user_id = ? AND request.status_id = 2 " +
-                "GROUP BY play_dates.play_date_id, pets.pet_id, request.mate_id " +
-                "ORDER BY meeting_date ASC";
 
-        SqlRowSet results= jdbcTemplate.queryForRowSet(sql,userId);
-        while (results.next()){
-            requestsByUserId.add(mapRowToSet(results, mapRowToPlayDate(results)));
-        }
-        System.out.println(requestsByUserId);
-        return requestsByUserId;
 
-    }
-
+    //retrieve list of all playdates user's pet has applied for but not yet confirmed
     @Override
     public List<Request> getPlayDatesPendingHostApproval(long userId) {
         List<Request> pendingPlayDatesList = new ArrayList<>();
@@ -73,17 +56,6 @@ public class JdbcRequestDao implements RequestDao {
                 "JOIN user_pet ON pets.pet_id=user_pet.pet_id WHERE user_id = ? AND request.status_id = 2 " +
                 "AND play_dates.meeting_date >= CURRENT_DATE GROUP BY play_dates.play_date_id, pets.pet_id, request.mate_id " +
                 "ORDER BY meeting_date ASC";
-
-
-
-                /*"SELECT play_dates.play_date_id, host_pet_id, mate_pet_id, location_street_address, location_city, location_zipcode, meeting_date, " +
-                "start_time, duration, mate_description, mate_size, play_dates.status_id FROM play_dates " +
-                "JOIN request ON play_dates.play_date_id= request.play_date_id " +
-                "JOIN pets ON request.mate_id= pets.pet_id " +
-                "JOIN user_pet ON pets.pet_id= user_pet.pet_id WHERE user_id = ? " +
-                "AND request.status_id = 2 AND meeting_date >= CURRENT_DATE " +
-                "ORDER BY meeting_date ASC";*/
-
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
@@ -120,6 +92,7 @@ public class JdbcRequestDao implements RequestDao {
         request.setMateTemperament(results.getString("temperament"));
         request.setMateSize(results.getString("size"));
         request.setMateSpayedNeutered(results.getString("spayed_neutered"));
+        request.setMateImage((results.getString("image")));
 
         String sql = "SELECT name FROM pets WHERE pet_id = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, request.getHostPetId());
@@ -148,10 +121,11 @@ public class JdbcRequestDao implements RequestDao {
         request.setMateSize(results.getString("size"));
 
         //new chunk start
-        String sql = "SELECT name FROM pets WHERE pet_id = ?";
+        String sql = "SELECT name,image FROM pets WHERE pet_id = ?";
         SqlRowSet result1 = jdbcTemplate.queryForRowSet(sql, request.getHostPetId());
         if(result1.next()){
             request.setHostName(result1.getString("name"));
+            request.setMateImage(result1.getString("image"));
         }
         String sql2 = "SELECT name FROM pets WHERE pet_id=?";
         SqlRowSet result2 = jdbcTemplate.queryForRowSet(sql2, request.getMateId());
@@ -163,3 +137,36 @@ public class JdbcRequestDao implements RequestDao {
         return request;
     }
 }
+
+
+
+
+
+// for nothing
+    /*@Override
+    public List<Request> getAllRequestsByMateId(long userId) {
+        List<Request> requestsByUserId = new ArrayList<>();
+        String sql= "SELECT play_dates.play_date_id, request.mate_id, play_dates.meeting_date, play_dates.start_time, play_dates.duration, play_dates.location_street_address, " +
+                "play_dates.host_pet_id, pets.pet_id, pets.name, pets.breed, pets.birth_year, pets.gender, pets.temperament, pets.size, pets.spayed_neutered FROM request " +
+                "JOIN play_dates ON request.play_date_id= play_dates.play_date_id JOIN pets ON request.mate_id= pets.pet_id " +
+                "JOIN user_pet ON pets.pet_id=user_pet.pet_id WHERE user_id = ? AND request.status_id = 2 " +
+                "GROUP BY play_dates.play_date_id, pets.pet_id, request.mate_id " +
+                "ORDER BY meeting_date ASC";
+
+        SqlRowSet results= jdbcTemplate.queryForRowSet(sql,userId);
+        while (results.next()){
+            requestsByUserId.add(mapRowToSet(results, mapRowToPlayDate(results)));
+        }
+        System.out.println(requestsByUserId);
+        return requestsByUserId;
+
+    }*/
+
+
+ /*"SELECT play_dates.play_date_id, host_pet_id, mate_pet_id, location_street_address, location_city, location_zipcode, meeting_date, " +
+                "start_time, duration, mate_description, mate_size, play_dates.status_id FROM play_dates " +
+                "JOIN request ON play_dates.play_date_id= request.play_date_id " +
+                "JOIN pets ON request.mate_id= pets.pet_id " +
+                "JOIN user_pet ON pets.pet_id= user_pet.pet_id WHERE user_id = ? " +
+                "AND request.status_id = 2 AND meeting_date >= CURRENT_DATE " +
+                "ORDER BY meeting_date ASC";*/

@@ -22,14 +22,15 @@ public class PlayDate {
     private long statusId;
     private String userPetName;
     private String mateName; //new
-
+    private String hostImage;
+    private String mateImage;
 
 
     public PlayDate(){
 
     }
-    //added mateName
-    public PlayDate(long playDateId, long hostPetId, long matePetId, String locationStreetAddress, String locationCity, long locationZipcode, LocalDate meetingDate, LocalTime startTime, long duration, String[] mateDescription, String mateSize, long statusId, String userPetName, String mateName) {
+    //added mateName, hostImage, mateImage
+    public PlayDate(long playDateId, long hostPetId, long matePetId, String locationStreetAddress, String locationCity, long locationZipcode, LocalDate meetingDate, LocalTime startTime, long duration, String[] mateDescription, String mateSize, long statusId, String userPetName, String mateName, String hostImage, String mateImage) {
         this.playDateId = playDateId;
         this.hostPetId = hostPetId;
         this.matePetId = matePetId;
@@ -44,6 +45,8 @@ public class PlayDate {
         this.statusId = statusId;
         this.userPetName = userPetName;
         this.mateName= mateName;
+        this.hostImage=hostImage;
+        this.mateImage=mateImage;
     }
 
     public String getUserPetName() {
@@ -157,6 +160,22 @@ public class PlayDate {
 
     public void setStatusId(long statusId) {
         this.statusId = statusId;
+    }
+
+    public String getHostImage() {
+        return hostImage;
+    }
+
+    public void setHostImage(String hostImage) {
+        this.hostImage = hostImage;
+    }
+
+    public String getMateImage() {
+        return mateImage;
+    }
+
+    public void setMateImage(String mateImage) {
+        this.mateImage = mateImage;
     }
 
     @Override

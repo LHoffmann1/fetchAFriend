@@ -96,11 +96,6 @@ public class PetController {
         return requestDao.getAllRequestsByUserId(userId);
     }
 
-    @GetMapping("/request/{id}")
-    public List<Request> getRequestsByMateId(@PathVariable("id") long matePetId){
-        return requestDao.getAllRequestsByMateId(matePetId);
-    }
-
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/request/{playDateId}/{mateId}")
     public void updateRequest(@PathVariable long playDateId, @PathVariable long mateId) {
@@ -137,6 +132,11 @@ public class PetController {
     }
 
 
+
+      /*@GetMapping("/request/{id}")
+    public List<Request> getRequestsByMateId(@PathVariable("id") long matePetId){
+        return requestDao.getAllRequestsByMateId(matePetId);
+    }*/
 
 
 

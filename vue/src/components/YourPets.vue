@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-      <h1 id="title">Your Pet Details: </h1>
+      <h1 id="title">Your Pet(s): </h1>
       <div id="tile">
       <div id="pet-tile" v-for="pet in pets" 
       v-bind:key="pet.index"
@@ -10,7 +10,7 @@
         {{pet.name}}   
        
        <div id="image"> <img id= "image-link" v-bind:src="pet.image"
-  width="200"/> </div></div>
+  /> </div></div>
       </div>
 
   </div>
@@ -49,10 +49,7 @@ export default {
   line-height: 30px;
   width: 250px;
   background-color:  rgb(25, 149, 180);
-    margin: 5px;
-    
-    
-
+  margin: 5px;
 }
 
 #main{ 
@@ -67,8 +64,10 @@ export default {
 }
 #image{
   margin-top: 10px;
-  
-
+}
+img{
+   border: white 3px solid;
+  width:200px;
 }
 
 h1{

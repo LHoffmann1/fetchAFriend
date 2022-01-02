@@ -88,7 +88,7 @@ export default {
   margin-bottom:15px;
   }
   #name {
-    font-size: 32px;
+    font-size: 40px;
     margin-left: 20px;
     color: #a6dcef
   }
